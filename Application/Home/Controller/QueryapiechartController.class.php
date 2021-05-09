@@ -152,6 +152,9 @@ class QueryapiechartController extends Controller
 
 		$ckey=$this->getCacheKey($symbol,$period);
 
+
+			$Line = M("Data_line"); // 实例化
+			
 		$cachekms = S($ckey);
 		if(empty($cachekms)==true)
 		{
@@ -178,17 +181,86 @@ class QueryapiechartController extends Controller
 				else {S($ckey,$cachekms,5*60);}
 			}
 
+		//写入数据
+			foreach($cachekms as $v){
+		    	$data = $this->object_to_array($v);
+                $data['symbol'] = $symbol;
+                $data['period'] = $period;
+                $Line->add($data);
+			}
+			
 			$retl["Code"]=1;
-			$retl["Obj"]=$cachekms;
+// 			$retl["Obj"]=$cachekms;
 
-			return json_encode($retl);
+// 			return json_encode($retl);
 		}
+
+	
+
+                $where['symbol'] = $symbol;
+                $where['period'] = $period;
+                $where['Tick']  = array('lt',time());
+                
+                // var_dump($where);
+           
+                $cachekms = $Line->where($where)->field('C,Tick,D,O,H,L,A,V')->order('D desc')->limit(100)->select();//
+
+            foreach($cachekms as &$v){
+                $v['C'] = floatval($v['C']);
+                $v['Tick'] = intval($v['Tick']);
+                $v['O'] = floatval($v['O']);
+                $v['H'] = floatval($v['H']);
+                $v['L'] = floatval($v['L']);
+                $v['A'] = floatval($v['A']);
+                $v['V'] = floatval($v['V']);
+			}
+
+
 
 		$retl["Code"]=0;
 		$retl["Obj"]=$cachekms;
 
 		return json_encode($retl);
 	}
+
+    /**
+     * 对象 转 数组
+     *
+     * @param object $obj 对象
+     * @return array
+     */
+    public function object_to_array($obj) {
+        $obj = (array)$obj;
+        foreach ($obj as $k =>$v) {
+            if (gettype($v) == 'resource') {
+                return;
+            }
+            if (gettype($v) == 'object' || gettype($v) == 'array') {
+                $obj[$k] = (array)object_to_array($v);
+            }
+        }
+     
+        return $obj;
+    }
+
+/**
+ * 数组 转 对象
+ *
+ * @param array $arr 数组
+ * @return object
+ */
+ public function array_to_object($arr) {
+    if (gettype($arr) != 'array') {
+        return;
+    }
+    foreach ($arr as $k => $v) {
+        if (gettype($v) == 'array' || getType($v) == 'object') {
+            $arr[$k] = (object)array_to_object($v);
+        }
+    }
+ 
+    return (object)$arr;
+}
 
 	function getCacheKey($symbol,$period)//缓存，以防查询过多
 	{
