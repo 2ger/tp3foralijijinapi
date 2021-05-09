@@ -1,0 +1,15 @@
+1. 部署thinkphp3.2项目
+**请仔细看2的频率配置说明，页面上的频率调整是针对每个浏览器终端，您可以在服务端加上缓存避免因用户过多导致次数过多
+
+2. 在配置文件 application\home\conf\config.php 中AppCode配置节
+	配置好即可使用
+
+	**所有功能嵌入页 /home/Queryapitdvchart/index***注意，这里有1个接口调用(列表实时)，频率越小，更新越快，次数越多
+
+	**图表展示页 /home/Queryapitdvchart/charts ，可配置图表样式，行情更新频率***注意，这里有1个接口调用(k线)，频率越小，更新越快，次数越多
+
+
+3.购买地址
+https://market.aliyun.com/products/57000002/cmapi029045.html
+
+4.代码中已经做好历史数据缓存，有效减少请求次数。请注意使用次数，用完后图表会不显示哦

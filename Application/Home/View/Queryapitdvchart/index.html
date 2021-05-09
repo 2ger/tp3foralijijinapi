@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>数据行情接口_股票行情接口_期货行情接口_外汇行情接口_CFD合约行情接口_数字货币行情接口</title>
+    <meta name="keywords" content="数据行情,股票行情,期货行情,外汇行情,CFD合约行情,数字货币行情,全推接口,行情接口,行情api" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <script type="text/javascript" src="/Public/Home/js/jquery-1.8.2.min.js"></script>
+      <style>
+		.corg{color:green;background-color:rgba(46,204,113,0.2)}.corn{color:#000;background-color:none}.corr{color:#eb4d5c;background-color:rgba(211,84,0,0.2)}.corg2{color:green}.corn2{color:#000}.corr2{color:#eb4d5c}.s{font-weight:normal!important}.bgred{background-color:navajowhite;color:red}.bggreen{background-color:lightgreen;color:green}.bgnormal{color:#222}.bger{font-weight:bolder}.smer{font-weight:normal}body{font-size:12px}a{text-decoration:none;color:#0064b9}.rowwrap{width:100%;display:table;overflow:hidden;padding-bottom:15px;line-height:35px}.rowhead{width:100%;display:table-row;height:35px;background-color:#dedede}.row{width:100%;display:table-row;height:35px;border-bottom:solid 1px #cdcdcd}.cell{display:table-cell;width:20%;display:inline-block;text-align:center;border-bottom:solid 1px #cdcdcd}
+	</style>
+</head>
+<body style="margin:0;padding:0;">
+    <div style="float:left;display:block;width:20%;">
+        <div class="rowwrap">
+            <div class="rowhead">
+                <span class="cell">代码</span>
+                <span class="cell">现价</span>
+                <span class="cell">买</span>
+                <span class="cell">卖</span>
+                <span class="cell">涨跌</span>
+            </div>
+            <div id="showwrapdiv" style="width:100%;display:table;"></div>
+        </div>
+    </div>
+    <div style="display:block;">
+		<iframe id="ifmMaintest" name="ifmMaintest" src="charts.html?symbol=BTC" style="float:left;width:58%;border:solid 1px #ccc;height:600px;"></iframe>
+    </div>
+    <div style="display:inline-block;width:20%;">
+        <!--报价盘-->
+        <div>
+            <div style="width:100%;"><span id="spN" style="margin-left:5px;border-radius:3px;padding:0 3px;display:inline-block;font-weight:bolder;font-size:166%;">-</span><span id="spFS" style="border-radius:3px;padding:0 3px;display:inline-block;font-weight:bolder;font-size:133%;"></span></div>
+        </div>
+        <div style="line-height:25px;font-size:9px;color:#666;display:table;margin-left:5px;">
+            <div style="display:table-row">
+                <div style="display:table-cell;width:33%;">最新：<span id="spP" style="border-radius:3px;padding:0 3px;display:inline-block;font-weight:bolder;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">卖一：<span id="spS1" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-weight:bolder;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">量：<span id="spS1V" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-weight:bolder;font-size:133%;">0</span></div>
+            </div>
+            <div style="display:table-row">
+                <div style="display:table-cell;width:33%;">现量：<span id="spNV" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;padding-right:10px;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">买一：<span id="spB1" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;padding-right:10px;font-weight:bolder;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">量：<span id="spB1V" style="border-radius:3px;padding:0 3px;width:75px;display:inline-block;padding-right:10px;font-weight:bolder;font-size:133%;">0</span></div>
+            </div>
+            <div style="display:table-row">
+                <div style="display:table-cell;width:33%;">涨跌：<span id="spZD" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">今开：<span id="spO" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">最高：<span id="spH" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+            </div>
+            <div style="display:table-row">
+                <div style="display:table-cell;width:33%;">涨幅%：<span id="spZF" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">最低：<span id="spL" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">昨收：<span id="spYC" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+            </div>
+            <div style="display:table-row">
+                <div style="display:table-cell;width:33%;">总量：<span id="spV" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">持仓：<span id="spHD" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+                <div style="display:table-cell;width:33%;">昨结：<span id="spYJS" style="border-radius:3px;padding:0 3px;width:70px;display:inline-block;font-size:133%;">0</span></div>
+            </div>
+        </div>
+        <!--Ticks-->
+        <div style="width:96%;margin:10px 10px 0 10px;background-color:#eeeeee;color:#999;border-top:solid 1px #dedede;">时间,成交价格,量,方向,序号</div>
+        <div id="showdiv" style="width:96%;margin:0 10px 10px 10px;overflow-y:scroll;height:400px;border-top:solid 1px #dedede;">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //请求品种
+        var __symbols = "BTC,EURJPY,SH000001,CMENQ,SHFEAU,HKEXHSI,COMEXGC,NYMEXCL";
+        //本地行情api
+        var __quoteapi = "/home/queryapitdvchart/rms";
+        //列表刷新间隔，毫秒
+        var _interval = 1000;
+        var _timer1 = null;
+        var __symbol = "BTC";
+
+        $(function () {
+            var showhtmls = "";
+            var symss = __symbols.split(',');
+            for (var i = 0; i < symss.length; i++) {
+                showhtmls += "<div class='row'><span class='cell'><a href=\"javascript:showChart('" + symss[i] + "');\">" + symss[i] + "</a></span><span class='cell' id=\"p" + symss[i] + "\">-</span><span class='cell' id=\"buy" + symss[i] + "\">-</span><span class='cell' id=\"sell" + symss[i] + "\">-</span><span class='cell' id=\"zf" + symss[i] + "\">-</span></div>";
+            }
+            $("#showwrapdiv").html(showhtmls);
+
+            __symbol = symss[0];
+
+            requestrmaps();
+            _timer1 = setInterval("timerDo()", _interval);
+        });
+
+        function showChart(symbol) {
+            try {
+                document.getElementById("ifmMaintest").src = "charts.html?symbol=" + symbol;
+            } catch (e) { }
+
+            resetBoard();
+            __symbol = symbol;
+        }
+
+        var _doingflag = false;
+        function timerDo() {
+            try {
+                if (!_doingflag) {
+                    _doingflag = true;
+                    requestrmaps();
+                }
+            }
+            catch (e) { }
+            _doingflag = false;
+        }
+
+        function requestrmaps() {
+            $.ajax({
+                url: __quoteapi,
+                dataType: "json",
+                data: "_m=rmaps&symbols=" + __symbols,
+                success: function (data) {
+                    if (data.Code >= 0) {
+                        showData(data.Obj);
+                    }
+                }
+            });
+        }
+
+        function showData(datas) {
+            if (datas != null && datas != undefined && typeof (datas) != "undefined") {
+
+                for (var i = 0; i < datas.length; i++) {
+                    var obj = datas[i];
+
+                    try {
+                        //将价格同步到图表里
+                        window.ifmMaintest.syncchart(obj.FS, { time: 0, open: 0, high: 0, low: 0, close: obj.P, volume: 0 });
+                    }
+                    catch (e) { }
+
+                    try {
+                        //将价格同步到图表报
+                        window.ifmMaintest.showBoard(obj.FS, obj);
+                    }
+                    catch (e) { }
+
+                    try {
+                        //将价格同步到报价盘
+                        if (obj.FS == __symbol) { priceCallback(obj); }
+                    }
+                    catch (e) { }
+
+                    //列表显示
+                    if (obj.S != undefined) {
+                        var objbuy = $("#buy" + obj.M + obj.S + obj.C);
+                        var objsell = $("#sell" + obj.M + obj.S + obj.C);
+                        var objp = $("#p" + obj.M + obj.S + obj.C);
+                        var objzf = $("#zf" + obj.M + obj.S + obj.C);
+                        if (objbuy != undefined) {
+                            var obuy = parseFloat(objbuy.html());
+                            objbuy.html(fixPrice(obj.B1));
+                            objbuy.removeClass("bggreen").removeClass("bgred").removeClass("bgnormal");
+                            if (obj.B1 > obuy) { objbuy.addClass("bgred"); } else if (obj.B1 < obuy) { objbuy.addClass("bggreen"); } else { objbuy.addClass("bgnormal"); }
+                            if (objbuy.hasClass("bger")) { objbuy.removeClass("bger").addClass("smer"); } else { objbuy.removeClass("smer").addClass("bger"); }
+                        }
+                        if (objsell != undefined) {
+                            var osell = parseFloat(objsell.html());
+                            objsell.html(fixPrice(obj.S1));
+                            objsell.removeClass("bggreen").removeClass("bgred").removeClass("bgnormal");
+                            if (obj.S1 > osell) { objsell.addClass("bgred"); } else if (obj.S1 < osell) { objsell.addClass("bggreen"); } else { objsell.addClass("bgnormal"); }
+                            if (objsell.hasClass("bger")) { objsell.removeClass("bger").addClass("smer"); } else { objsell.removeClass("smer").addClass("bger"); }
+                        }
+                        if (objp != undefined) {
+                            var op = parseFloat(objp.html());
+                            var tempp = (obj.P <= 0 ? obj.S1 : obj.P);
+                            objp.html(fixPrice(tempp));
+                            objp.removeClass("bggreen").removeClass("bgred").removeClass("bgnormal");
+                            if (tempp > op) { objp.addClass("bgred"); } else if (tempp < op) { objp.addClass("bggreen"); } else { objp.addClass("bgnormal"); }
+                            if (objp.hasClass("bger")) { objp.removeClass("bger").addClass("smer"); } else { objp.removeClass("smer").addClass("bger"); }
+                        }
+
+                        if (objzf != undefined) {
+                            var tempp = (obj.P <= 0 ? obj.S1 : obj.P);
+                            var tempyc = (obj.YC <= 0 ? tempp : obj.YC);
+                            var tempzf = (obj.ZF == 0 ? (tempyc > 0 ? ((tempp - tempyc) * 100 / tempyc) : 0) : obj.ZF);
+                            objzf.html(tempzf.toFixed(3));
+                            objzf.removeClass("bggreen").removeClass("bgred").removeClass("bgnormal");
+                            if (tempzf > 0) { objzf.addClass("bgred"); } else if (tempzf < 0) { objzf.addClass("bggreen"); } else { objzf.addClass("bgnormal"); }
+                            if (objzf.hasClass("bger")) { objzf.removeClass("bger").addClass("smer"); } else { objzf.removeClass("smer").addClass("bger"); }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!--价格输出-->
+    <script type="text/javascript">
+        var _lsttime = 0;
+        var _prep = 0;
+        var _preb1 = 0;
+        var _pres1 = 0;
+        var _lstts = "";
+
+        function resetBoard() {
+            _lsttime = 0;
+            _prep = 0;
+            _preb1 = 0;
+            _pres1 = 0;
+            _lstts = "";
+        }
+
+        function priceCallback(d) {
+            if (d.Tick < _lsttime)
+                return;
+
+            _lsttime = d.Tick;
+
+            $("#spN").html(d.N);
+            $("#spFS").html(d.FS);
+
+            var p = d.P;
+            var s1 = d.S1;
+            var b1 = d.B1;
+            var s1v = d.S1V;
+            var b1v = d.B1V;
+
+            if (p <= 0) { p = s1; }
+            if (_prep == 0) { _prep = p; }
+            if (_preb1 == 0) { _preb1 = b1; }
+            if (_pres1 == 0) { _pres1 = s1; }
+
+            $("#spP").removeClass("corg").removeClass("corr");
+            $("#spB1").removeClass("corg").removeClass("corr");
+            $("#spB1V").removeClass("corg2").removeClass("corr2");
+            $("#spS1").removeClass("corg").removeClass("corr");
+            $("#spS1V").removeClass("corg2").removeClass("corr2");
+            if (_prep < p) { $("#spP").addClass("corr"); } else if (_prep > p) { $("#spP").addClass("corg"); }
+            if ($("#spP").hasClass("s")) { $("#spP").removeClass("s"); } else { $("#spP").addClass("s"); }
+            if (_preb1 < b1) { $("#spB1").addClass("corr"); $("#spB1V").addClass("corr2"); } else if (_preb1 > b1) { $("#spB1").addClass("corg"); $("#spB1V").addClass("corg2"); }
+            if ($("#spB1").hasClass("s")) { $("#spB1").removeClass("s"); } else { $("#spB1").addClass("s"); }
+            if (_pres1 < s1) { $("#spS1").addClass("corr"); $("#spS1V").addClass("corr2"); } else if (_pres1 > s1) { $("#spS1").addClass("corg"); $("#spS1V").addClass("corg2"); }
+            if ($("#spS1").hasClass("s")) { $("#spS1").removeClass("s"); } else { $("#spS1").addClass("s"); }
+
+            if (p <= 0) { p = s1; }
+            if (b1 <= 0) { b1 = p; }
+            if (s1 <= 0) { s1 = p; }
+
+            $("#spP").html(fixPrice(p));
+            $("#spB1").html(fixPrice(b1));
+            $("#spS1").html(fixPrice(s1));
+            $("#spB1V").html(b1v);
+            $("#spS1V").html(s1v);
+
+            _prep = p;
+            _preb1 = b1;
+            _pres1 = s1;
+
+            $("#spNV").html(d.NV);
+            $("#spO").html(d.O);
+            $("#spH").html(d.H);
+            $("#spL").html(d.L);
+            $("#spYC").html(d.YC);
+            $("#spV").html(d.V);
+            $("#spYJS").html(d.YJS);
+            $("#spHD").html(d.HD);
+            if (d.YC > 0) { $("#spZF").html(((d.P - d.YC) * 100 / d.YC).toFixed(2)); }
+            $("#spZD").html(fixPrice(d.P - d.YC));
+
+            var ts = d.TS;
+            var tss = ts.split(',');
+            if (tss.length == 5) {
+                var tempts = tss[0] + "_" + tss[4];
+                if (_lstts != tempts) {
+
+                    _lstts = tempts;
+
+                    $("#showdiv").prepend("<div>" + d.TS + "</div>");
+                    $('#showdiv').scrollTop(0);
+
+                    if ($("#showdiv>div").length > 30)
+                        $("#showdiv").find("div:gt(25)").remove()
+                }
+            }
+        }
+
+        function fixPrice(p) {
+            if (p > 20000) { return p.toFixed(1); }
+            else if (p > 1000) { return p.toFixed(2); }
+            else if (p > 100) { return p.toFixed(3); }
+            else if (p > 10) { return p.toFixed(4); }
+            else if (p > 1) { return p.toFixed(5); }
+            else return p.toFixed(6);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+程序环境为ThinkPHP3.2
+
+***部署thinkphp项目,该目录为网站根目录
+***linux环境注意目录文件大小写
+
+demo包含行情接口，快讯接口，图表接口接入
+*********请仔细看每个 Application\Home\View  子目录(图表目录)里的 配置使用说明
+
+***查询
+view\queryapiechart 目录为查询接口接入范例（列表+echart图表+快讯）,链接 /home/Queryapiechart/index
+
+view\queryapisinachart	目录为查询接口接入范例（列表+sina图表+快讯）,链接  /home/Queryapisinachart/index
+
+view\queryapitdvchart	目录为查询接口接入范例（列表+tradingview图表+快讯）,链接  /home/Queryapitdvchart/index
+
